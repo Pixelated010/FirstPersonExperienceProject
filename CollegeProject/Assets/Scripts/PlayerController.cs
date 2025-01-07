@@ -2,44 +2,82 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
-    
-    [SerializeField] float movementSpeed;
-    [SerializeField] float gravity;
-    [SerializeField] float CameraSpeed;
+    public float moveSpeed;
+    public float sprint;
+    public float gravity;
+    public float gravityLimit;
+    public float jumpforce;
+    public float camSpeed;
 
-    Vector2 Inputs;
+    Vector2 inputs;
 
     public CharacterController controller;
 
-    [SerializeField] GameObject playerCamera;
-    [SerializeField] GameObject playerHead;    
- 
-    
+    public GameObject playerCam;
+    public GameObject playerHead;
+
     // Start is called before the first frame update
     void Start()
     {
-
+       Cursor.lockState = CursorLockMode.Locked;    
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();        
+        Movement();
+        Rotation();
+        jump();
+        PlayerSprint();
     }
 
-    private void PlayerMovement()
+
+    private void Movement()
     {
-        float xValue = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-        float zValue = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+        inputs = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        Inputs = new Vector2(xValue, zValue);
+        Vector3 movement = new Vector3(inputs.x, gravity, inputs.y);
 
-        Vector3 movement = new Vector3(xValue, gravity, zValue);
-        movement = Quaternion.Euler(0, playerCamera.transform.eulerAngles.z, 0) * movement;
-        controller.Move(movement * movementSpeed * Time.deltaTime);
+        movement = Quaternion.Euler(0, playerCam.transform.eulerAngles.y, 0) * movement;
+        controller.Move(movement * moveSpeed * Time.deltaTime);
+    }
+
+    private void Rotation()
+    {
+        playerHead.transform.rotation = Quaternion.Slerp(playerHead.transform.rotation, playerCam.transform.rotation, camSpeed * Time.deltaTime);
+        // movs the player head with the playercam at the camera speed by using quaternion.slerp, which quaternion is used for rotation
+    }
+
+    private void jump()
+    {
+        if(gravity < gravityLimit)
+        {
+            gravity = gravityLimit;
+        }
+        else
+        {
+            gravity -= Time.deltaTime;
+        }
+
+        if(controller.isGrounded && Input.GetButtonDown("Jump"))
+        {
+            gravity = Mathf.Sqrt(jumpforce);
+        }
+    }
+
+    private void PlayerSprint()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            moveSpeed *= sprint;
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            moveSpeed = 10;
+        }
     }
 }
