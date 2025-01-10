@@ -2,17 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
-    public float sprint;
+    public float sprintSpeed;
+    public float crouchSpeedRemover;
     public float gravity;
     public float gravityLimit;
     public float jumpforce;
-    public float camSpeed;
+    public float camSpeed;  
 
     Vector2 inputs;
+
+    Vector3 playerSize = new Vector3(1, 1, 1);
+    Vector3 crouchingSize = new Vector3(1, 0.6f, 1);
 
     public CharacterController controller;
 
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
         Rotation();
         jump();
         PlayerSprint();
+        crouching();
     }
 
 
@@ -72,12 +78,29 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            moveSpeed *= sprint;
+            moveSpeed *= sprintSpeed;
         }
 
         if(Input.GetKeyUp(KeyCode.LeftShift))
         {
             moveSpeed = 10;
+        }
+    }
+
+    private void crouching()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            transform.localScale = crouchingSize;
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
+            moveSpeed -= crouchSpeedRemover;       
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            transform.localScale = playerSize;
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+            moveSpeed = 10;            
         }
     }
 }
