@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
     public float sprintSpeed;
+    public float ogSpeed;
     public float crouchSpeedRemover;
     public float gravity;
     public float gravityLimit;
@@ -43,6 +44,10 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+        //inputs is a vector2 which gets the horizontal and vertical inputs, which is then put in a vector3, which as inputs.x, for the horizontal axis, 
+        //gravity, for the y axis and finally inputs.y for the final axis
+        
+        //idk what the last 2 bits of code does so i need to research thast before putting a comment here
         inputs = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         Vector3 movement = new Vector3(inputs.x, gravity, inputs.y);
@@ -54,7 +59,7 @@ public class PlayerController : MonoBehaviour
     private void Rotation()
     {
         playerHead.transform.rotation = Quaternion.Slerp(playerHead.transform.rotation, playerCam.transform.rotation, camSpeed * Time.deltaTime);
-        // movs the player head with the playercam at the camera speed by using quaternion.slerp, which quaternion is used for rotation
+        // moves the player head with the playercam at the camera speed by using quaternion.slerp, which quaternion is used for rotation
     }
 
     private void jump()
@@ -78,12 +83,12 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            moveSpeed *= sprintSpeed;
+            moveSpeed *= sprintSpeed;//when the player presses the shift key the movement speed is times by the sprint speed
         }
 
         if(Input.GetKeyUp(KeyCode.LeftShift))
         {
-            moveSpeed = 10;
+            moveSpeed = ogSpeed;//when the player lets go of the shift key, the movement is set back to 10
         }
     }
 
@@ -91,6 +96,9 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.LeftControl))
         {
+            //the transform.local scale makes the player the size of a vector3 called crouchingsize, next transform.potition makes the position of the y decrease
+            //which allows the player character to appear to move lower for the player, finally some movespeed is removed by the crouchspeedremover
+            //which makes the player move slower
             transform.localScale = crouchingSize;
             transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
             moveSpeed -= crouchSpeedRemover;       
@@ -98,9 +106,12 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyUp(KeyCode.LeftControl))
         {
+            //when the player presses off the left control key the player's size the players size gets set to the player size, which is the original height of the character
+            //then the player position is raised in order to not be in the ground when the player uncrouches, finally i set the movement speed back to the original speed 
+            //it was set at
             transform.localScale = playerSize;
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
-            moveSpeed = 10;            
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+            moveSpeed = ogSpeed;            
         }
     }
 }

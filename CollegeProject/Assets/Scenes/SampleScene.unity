@@ -1431,6 +1431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   sprintSpeed: 2
+  ogSpeed: 10
   crouchSpeedRemover: 4
   gravity: 0
   gravityLimit: -5
