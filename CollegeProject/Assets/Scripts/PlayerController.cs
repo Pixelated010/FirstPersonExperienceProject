@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +23,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject playerCam;
     public GameObject playerHead;
+
+    bool crouchCheck = true;
+    bool sprintCheck = true;
 
     // Start is called before the first frame update
     void Start()
@@ -81,37 +83,57 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerSprint()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if(sprintCheck)
         {
-            moveSpeed *= sprintSpeed;//when the player presses the shift key the movement speed is times by the sprint speed
-        }
-
-        if(Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            moveSpeed = ogSpeed;//when the player lets go of the shift key, the movement is set back to 10
+        makePlayerSprint();
         }
     }
 
     private void crouching()
     {
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        if(crouchCheck)
+        {
+            makePlayerCrouch();
+        }
+    }
+
+    private void makePlayerSprint()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            crouchCheck = false;
+            moveSpeed *= sprintSpeed;//when the player presses the shift key the movement speed is times by the sprint speed
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            crouchCheck = true;
+            moveSpeed = ogSpeed;//when the player lets go of the shift key, the movement is set back to 10
+        }
+    }
+
+        private void makePlayerCrouch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             //the transform.local scale makes the player the size of a vector3 called crouchingsize, next transform.potition makes the position of the y decrease
             //which allows the player character to appear to move lower for the player, finally some movespeed is removed by the crouchspeedremover
             //which makes the player move slower
+            sprintCheck = false;
             transform.localScale = crouchingSize;
             transform.position = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
-            moveSpeed -= crouchSpeedRemover;       
+            moveSpeed -= crouchSpeedRemover;
         }
 
-        if(Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             //when the player presses off the left control key the player's size the players size gets set to the player size, which is the original height of the character
             //then the player position is raised in order to not be in the ground when the player uncrouches, finally i set the movement speed back to the original speed 
             //it was set at
+            sprintCheck = true;
             transform.localScale = playerSize;
             transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
-            moveSpeed = ogSpeed;            
+            moveSpeed = ogSpeed;
         }
     }
 }
