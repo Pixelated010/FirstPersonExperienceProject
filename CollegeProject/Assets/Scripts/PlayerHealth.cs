@@ -44,7 +44,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if(HitCount == 0)
         {
-            SceneManager.LoadScene("CurrentScene");
+            int currentScene = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentScene);
         }
     }
 
