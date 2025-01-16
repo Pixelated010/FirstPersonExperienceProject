@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,7 +20,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        distance = Vector3.Distance(this.transform.position, player.position);
+        distance = Vector3.Distance(transform.position, player.position);
 
         if(distance < 10)
         {
