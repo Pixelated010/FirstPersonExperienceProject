@@ -1,18 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement Settings")]
     public float moveSpeed;
     public float sprintSpeed;
     public float ogSpeed;
     public float crouchSpeedRemover;
+    public float SprintTimer;
+    public float SprintTimerCapacity;
+    public float SprintTimeRemover;
+    public float SprintTimeAdder;
+
+    [Header("Jump Settings")]
     public float gravity;
     public float gravityLimit;
     public float jumpforce;
-    public float camSpeed;  
+
+    [Header("Camera Settings")]
+    public float camSpeed;
+
+    [Header("HealthSlider")]
+    public Slider healthSlider;
+
 
     Vector2 inputs;
 
@@ -30,7 +41,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       Cursor.lockState = CursorLockMode.Locked;    
+       Cursor.lockState = CursorLockMode.Locked;   
     }
 
     // Update is called once per frame
@@ -41,6 +52,8 @@ public class PlayerController : MonoBehaviour
         jump();
         PlayerSprint();
         crouching();
+
+
     }
 
 
@@ -99,6 +112,12 @@ public class PlayerController : MonoBehaviour
 
     private void makePlayerSprint()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            SprintTimer -= SprintTimeRemover * Time.deltaTime;
+            healthSlider.value -= SprintTimeRemover;
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             crouchCheck = false;
@@ -109,7 +128,14 @@ public class PlayerController : MonoBehaviour
         {
             crouchCheck = true;
             moveSpeed = ogSpeed;//when the player lets go of the shift key, the movement is set back to 10
+            SprintTimer += SprintTimeAdder;
         }
+
+        if(SprintTimer > SprintTimerCapacity)
+        {
+            SprintTimer = SprintTimerCapacity;
+        }
+        
     }
 
         private void makePlayerCrouch()
