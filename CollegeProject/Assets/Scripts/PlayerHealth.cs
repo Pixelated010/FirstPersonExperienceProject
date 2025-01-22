@@ -1,14 +1,14 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int HitCount = 3;
     [SerializeField] int TimeDuration = 5;
+
+    public Slider HealthSlider;
 
     bool isAttackable = true;
 
@@ -35,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
         if(isAttackable == true)
         {
             HitCount = HitCount-1;
+            HealthSlider.value = HealthSlider.value-1;
             isAttackable = false;
             StartCoroutine("TimeDelay");
         }    

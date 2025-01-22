@@ -1,17 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float moveSpeed;
-    public float sprintSpeed;
-    public float ogSpeed;
-    public float crouchSpeedRemover;
-    public float SprintTimer;
-    public float SprintTimerCapacity;
-    public float SprintTimeRemover;
-    public float SprintTimeAdder;
+    public float moveSpeed = 10;
+    public float sprintSpeed = 2;
+    public float ogSpeed = 10;
+    public float crouchSpeedRemover = 4;
+    public float noSpeed = 5;
+    public float TimeDuration = 5;
+
+    [Header("Stamina")]
+    public float Stamina = 100;
+    public float maxStamina = 100;
+    public float StaminaAdder = 10;
+    public float StaminaRemove = 15;
 
     [Header("Jump Settings")]
     public float gravity;
@@ -21,39 +26,56 @@ public class PlayerController : MonoBehaviour
     [Header("Camera Settings")]
     public float camSpeed;
 
-    [Header("HealthSlider")]
-    public Slider healthSlider;
-
+    [Header("No Stamina Fix Settings")]
+    float MoveSpeedFix;
+    float sprintSpeedFix;
+    float crouchSpeedFix;
+    Vector3 CrouchingSizeFix;
+    float ogspeedFix;
 
     Vector2 inputs;
-
     Vector3 playerSize = new Vector3(1, 1, 1);
     Vector3 crouchingSize = new Vector3(1, 0.6f, 1);
 
     public CharacterController controller;
 
+    [Header("UI")]
+    public Slider StaminaBar;
+    public Image Circle;
+
     public GameObject playerCam;
     public GameObject playerHead;
 
     bool crouchCheck = true;
-    bool sprintCheck = true;
+    bool sprintCheck = true; 
 
     // Start is called before the first frame update
     void Start()
     {
-       Cursor.lockState = CursorLockMode.Locked;   
+       Cursor.lockState = CursorLockMode.Locked;
+
+       Circle.GetComponent<Image>();
+
+       MoveSpeedFix = moveSpeed;
+       sprintSpeedFix = sprintSpeed;
+       crouchSpeedFix = crouchSpeedRemover;
+       CrouchingSizeFix = crouchingSize;
+       ogspeedFix = ogSpeed;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        StaminaBar.value = Stamina;
         Movement();
         Rotation();
         jump();
         PlayerSprint();
         crouching();
-
-
+        StaminaAdd();
+        StaminaControl();
+        NoStamina();
     }
 
 
@@ -79,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     private void jump()
     {
-        if(gravity < gravityLimit)
+        if(gravity < gravityLimit && controller.isGrounded)
         {
             gravity = gravityLimit;
         }
@@ -96,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerSprint()
     {
-        if(sprintCheck)
+        if(sprintCheck && controller.isGrounded)
         {
         makePlayerSprint();
         }
@@ -104,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
     private void crouching()
     {
-        if(crouchCheck)
+        if(crouchCheck && controller.isGrounded )
         {
             makePlayerCrouch();
         }
@@ -114,10 +136,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            SprintTimer -= SprintTimeRemover * Time.deltaTime;
-            healthSlider.value -= SprintTimeRemover;
+            StaminaTake();
         }
-
+        
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             crouchCheck = false;
@@ -128,18 +149,17 @@ public class PlayerController : MonoBehaviour
         {
             crouchCheck = true;
             moveSpeed = ogSpeed;//when the player lets go of the shift key, the movement is set back to 10
-            SprintTimer += SprintTimeAdder;
-        }
-
-        if(SprintTimer > SprintTimerCapacity)
-        {
-            SprintTimer = SprintTimerCapacity;
         }
         
     }
 
-        private void makePlayerCrouch()
+    private void makePlayerCrouch()
     {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            StaminaTake();
+        }
+        
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             //the transform.local scale makes the player the size of a vector3 called crouchingsize, next transform.potition makes the position of the y decrease
@@ -161,5 +181,65 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
             moveSpeed = ogSpeed;
         }
+    }
+
+    private void StaminaControl()
+    {
+        if(Stamina > 100)
+        {
+            Stamina = 100;
+        }
+        
+        if(Stamina < 0)
+        {
+            Stamina = 0;
+
+        }
+    }
+    
+    private void StaminaAdd()
+    {
+        if(Stamina < maxStamina && moveSpeed == 10)
+        {
+            Stamina = Stamina +StaminaAdder * Time.deltaTime;
+        }
+    }
+
+    private void StaminaTake()
+    {
+        Stamina = Stamina - StaminaRemove * Time.deltaTime;
+    }
+
+    private void NoStamina()
+    {
+        if(Stamina == 0)
+        {
+            StamLossSpeedSettings();
+        }
+    }
+
+    private void StamLossSpeedSettings()
+    {
+        Circle.GetComponent<Image>().color = Color.red;
+
+        moveSpeed = noSpeed;
+        sprintSpeed = 1;
+        crouchSpeedRemover = 0;
+        crouchingSize = playerSize;
+        ogSpeed = noSpeed;
+
+        StartCoroutine(StaminaWait());
+    }
+
+    IEnumerator StaminaWait()
+    {
+        yield return new WaitForSeconds(TimeDuration);
+        Circle.GetComponent<Image>().color = Color.white;
+        moveSpeed = MoveSpeedFix;
+        sprintSpeed = sprintSpeedFix;
+        crouchSpeedRemover = crouchSpeedFix;
+        crouchingSize = CrouchingSizeFix;
+        ogSpeed = ogspeedFix;
+        
     }
 }
