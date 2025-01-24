@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - GoldenKey
+  - BlackKey
+  - WhiteKey
+  - GreenKey
+  - BlueKey
+  - RedKey
   layers:
   - Default
   - TransparentFX
