@@ -6,11 +6,6 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    
-    [Header("PlayerPosition")]
-    Vector3 PlayerPosition;
-    public GameObject Player;
-
     [Header("Collectable Items")]
     public GameObject GoldenKey;
     public GameObject WhiteKey;
@@ -41,11 +36,12 @@ public class GameManager : MonoBehaviour
     public bool hasRedKey = false;
     public bool hasGreenKey = false;
 
+    public bool nearGoldenKey = false;
+    public bool nearWhiteKey = false;
+    public bool nearBlackKey = false;
+    public bool nearBlueKey = false;
+    public bool nearRedKey = false;
+    public bool nearGreenKey = false;
+
     public bool hasAKey = false;
-    
-    // Update is called once per frame
-    void Update()
-    {
-        PlayerPosition = transform.position;        
-    }
 }
