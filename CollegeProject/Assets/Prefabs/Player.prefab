@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 3290592810011239102}
   - component: {fileID: 4039219310976187337}
   - component: {fileID: 4630466726684786568}
+  - component: {fileID: 3750463915882662227}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -310,8 +311,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ebc633e94f7284880638f4c1aba5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GoldenKey: {fileID: 0}
-  Lever: {fileID: 0}
+  PlayerObject: {fileID: 0}
+  TextTimeDuration: 5
+--- !u!114 &3750463915882662227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143990771710458195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f24d978223cc0c4ba05dbc2d6865331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoldenDoor: {fileID: 0}
+  WhiteDoor: {fileID: 0}
+  BlackDoor: {fileID: 0}
+  BlueDoor: {fileID: 0}
+  RedDoor: {fileID: 0}
+  GreenDoor: {fileID: 0}
 --- !u!1 &6486055298941591011
 GameObject:
   m_ObjectHideFlags: 0

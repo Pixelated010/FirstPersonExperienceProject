@@ -11,6 +11,18 @@ TagManager:
   - GreenKey
   - BlueKey
   - RedKey
+  - GoldenLock
+  - BlackLock
+  - WhiteLock
+  - GreenLock
+  - RedLock
+  - BlueLock
+  - GoldenDoor
+  - BlackDoor
+  - WhiteDoor
+  - GreenDoor
+  - BlueDoor
+  - RedDoor
   layers:
   - Default
   - TransparentFX
