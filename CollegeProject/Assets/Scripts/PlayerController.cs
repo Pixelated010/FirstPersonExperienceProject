@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour
         NoStamina();
     }
 
-
     private void Movement()
     {
         //inputs is a vector2 which gets the horizontal and vertical inputs, which is then put in a vector3, which as inputs.x, for the horizontal axis, 

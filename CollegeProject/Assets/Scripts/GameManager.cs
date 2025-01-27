@@ -33,14 +33,21 @@ public class GameManager : MonoBehaviour
     public bool nearRedDoor = false;
     public bool nearGreenDoor = false;
 
-    [Header("Near Door Bools")]
+    [Header("Unlocked Door Bools")]
     public bool unlockedGoldenDoor = false;
     public bool unlockedWhiteDoor = false;
     public bool unlockedBlackDoor = false;
     public bool unlockedBlueDoor = false;
-    public bool unlockedRedoor = false;
+    public bool unlockedRedDoor = false;
     public bool unlockedGreenDoor = false; 
 
+    [Header("Destroy Lock bools")]
+    public bool DestroyedLockGold = false;
+    public bool DestroyedLockWhite = false;
+    public bool DestroyedLockBlack = false;
+    public bool DestroyedLockBlue = false;
+    public bool DestroyedLockRed = false;
+    public bool DestroyedLockGreen = false;
 
     [Header("Collectable Items")]
     public GameObject GoldenKey;
@@ -58,6 +65,7 @@ public class GameManager : MonoBehaviour
     public bool hasBlueKey = false;
     public bool hasRedKey = false;
     public bool hasGreenKey = false;
+
     [Header("Near Key bools")]
     public bool nearGoldenKey = false;
     public bool nearWhiteKey = false;

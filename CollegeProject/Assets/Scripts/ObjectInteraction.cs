@@ -27,60 +27,7 @@ public class ObjectInteraction : MonoBehaviour
         PlayerPosition = PlayerObject.transform.position;
 
         DropKey();
-
-        if(GameManager.hasGoldenKey)
-        {
-            GameManager.GoldenKeyIcon.enabled = true;            
-        }
-        else
-        {
-            GameManager.GoldenKeyIcon.enabled = false;
-        }
-
-        if(GameManager.hasWhiteKey)
-        {
-            GameManager.WhiteKeyIcon.enabled = true;            
-        }
-        else
-        {
-            GameManager.WhiteKeyIcon.enabled = false;
-        }
-
-        if(GameManager.hasBlackKey)
-        {
-            GameManager.BlackKeyIcon.enabled = true;            
-        }
-        else
-        {
-            GameManager.BlackKeyIcon.enabled = false;
-        }
-
-        if(GameManager.hasBlueKey)
-        {
-            GameManager.BlueKeyIcon.enabled = true;            
-        }
-        else
-        {
-            GameManager.BlueKeyIcon.enabled = false;
-        }
-
-        if(GameManager.hasRedKey)
-        {
-            GameManager.RedKeyIcon.enabled = true;            
-        }
-        else
-        {
-            GameManager.RedKeyIcon.enabled = false;
-        }
-        
-        if(GameManager.hasGreenKey)
-        {
-            GameManager.GreenKeyIcon.enabled = true;            
-        }
-        else
-        {
-            GameManager.GreenKeyIcon.enabled = false;
-        }               
+        KeyIconEnabler();
     }
 
     private void OnTriggerStay(Collider other) 
@@ -278,5 +225,64 @@ public class ObjectInteraction : MonoBehaviour
         yield return new WaitForSeconds(TextTimeDuration);
         GameManager.InfoText.text = " ";
     }
+
+    private void KeyIconEnabler()
+    {
+        if (GameManager.hasGoldenKey)
+        {
+            GameManager.GoldenKeyIcon.enabled = true;
+        }
+        else
+        {
+            GameManager.GoldenKeyIcon.enabled = false;
+        }
+
+        if (GameManager.hasWhiteKey)
+        {
+            GameManager.WhiteKeyIcon.enabled = true;
+        }
+        else
+        {
+            GameManager.WhiteKeyIcon.enabled = false;
+        }
+
+        if (GameManager.hasBlackKey)
+        {
+            GameManager.BlackKeyIcon.enabled = true;
+        }
+        else
+        {
+            GameManager.BlackKeyIcon.enabled = false;
+        }
+
+        if (GameManager.hasBlueKey)
+        {
+            GameManager.BlueKeyIcon.enabled = true;
+        }
+        else
+        {
+            GameManager.BlueKeyIcon.enabled = false;
+        }
+
+        if (GameManager.hasRedKey)
+        {
+            GameManager.RedKeyIcon.enabled = true;
+        }
+        else
+        {
+            GameManager.RedKeyIcon.enabled = false;
+        }
+
+        if (GameManager.hasGreenKey)
+        {
+            GameManager.GreenKeyIcon.enabled = true;
+        }
+        else
+        {
+            GameManager.GreenKeyIcon.enabled = false;
+        }
+    }
+    
+
 
 }

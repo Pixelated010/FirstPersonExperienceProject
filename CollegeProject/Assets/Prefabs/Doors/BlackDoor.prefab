@@ -76,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 3392251372410936015, guid: 0ba4f0bf623a0014885d5b03a64f0b7b,
         type: 3}
       propertyPath: m_Name
-      value: BlackDoor Variant
+      value: BlackDoor
       objectReference: {fileID: 0}
     - target: {fileID: 7095339937494781322, guid: 0ba4f0bf623a0014885d5b03a64f0b7b,
         type: 3}
