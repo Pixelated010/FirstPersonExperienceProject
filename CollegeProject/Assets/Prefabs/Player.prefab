@@ -292,7 +292,7 @@ MonoBehaviour:
   StaminaRemove: 15
   gravity: 0
   gravityLimit: -10
-  jumpforce: 0.5
+  jumpforce: 0.05
   camSpeed: 15
   controller: {fileID: 8193337605574484222}
   StaminaBar: {fileID: 0}
@@ -325,12 +325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f24d978223cc0c4ba05dbc2d6865331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GoldenDoor: {fileID: 0}
-  WhiteDoor: {fileID: 0}
-  BlackDoor: {fileID: 0}
-  BlueDoor: {fileID: 0}
-  RedDoor: {fileID: 0}
-  GreenDoor: {fileID: 0}
+  LockFallTimer: 5
+  LockRemovalTimer: 5
+  DoorMover: {x: 0, y: 5, z: 0}
 --- !u!1 &6486055298941591011
 GameObject:
   m_ObjectHideFlags: 0

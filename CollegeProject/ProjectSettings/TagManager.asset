@@ -23,6 +23,9 @@ TagManager:
   - GreenDoor
   - BlueDoor
   - RedDoor
+  - FirstFloor
+  - SecondFloor
+  - Ladder
   layers:
   - Default
   - TransparentFX

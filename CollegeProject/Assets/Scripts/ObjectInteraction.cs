@@ -70,7 +70,7 @@ public class ObjectInteraction : MonoBehaviour
         if(other.gameObject.CompareTag("GreenKey"))
         {
             GameManager.nearGreenKey = true;
-            GameManager.InfoText.text = "Pick up Red Key with E";    
+            GameManager.InfoText.text = "Pick up Green Key with E";    
             PickUpKey(); 
         }    
     }
