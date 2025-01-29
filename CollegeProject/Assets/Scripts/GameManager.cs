@@ -82,8 +82,4 @@ public class GameManager : MonoBehaviour
     public Image RedKeyIcon;
     public Image GreenKeyIcon;
 
-    [Header("Interactable Objects")]
-    public GameObject Lever;
-
-
 }
