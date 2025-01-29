@@ -14,11 +14,15 @@ public class Ladder : MonoBehaviour
     public Transform FirstFloor;
     public Transform SecondFloor;
 
+    [Header("Floor Detection")]
+    public GameObject floorOneDetection;
+    public GameObject floorTwoDetection;
+
     [Header("Ladder Bools")]
     public bool nearLadderFirstFloor;
     public bool nearLadderSecondFloor;
-    public bool AscendedLadder = false; 
-    
+    public bool AscendedLadder = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,15 +39,30 @@ public class Ladder : MonoBehaviour
         descendLadder();     
     }
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Ladder") && !AscendedLadder)
+        nearLadderText(other);
+
+        if(other.gameObject.CompareTag("FirstFloor"))
+        {
+            AscendedLadder = false;
+        }
+
+        if(other.gameObject.CompareTag("SecondFloor"))
+        {
+            AscendedLadder = true;
+        }
+    }
+
+    private void nearLadderText(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ladder") && !AscendedLadder)
         {
             GameManager.InfoText.text = "Press E to ascend to the second floor!";
             nearLadderFirstFloor = true;
         }
 
-        if(other.gameObject.CompareTag("Ladder") && AscendedLadder)
+        if (other.gameObject.CompareTag("Ladder") && AscendedLadder)
         {
             GameManager.InfoText.text = "Press E to descend to the second floor!";
             nearLadderSecondFloor = true;
@@ -59,7 +78,6 @@ public class Ladder : MonoBehaviour
             Player.GetComponent<CharacterController>().enabled = true; 
             AscendedLadder = true;
             nearLadderFirstFloor = false;
-
         }
     }
 
