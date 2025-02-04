@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -5,35 +6,59 @@ using UnityEngine.AI;
 public class PathFinder : MonoBehaviour
 {
     
-    public float RWPP = 0;
+    NavMeshAgent Agent;
+    
+    public int RWPP = 0;
     //RWPP = Random WayPoint Position
     public float movementSpeed = 5;
 
     public bool currentlyWalking = false;
 
-    public Vector3 CurrentPosition;
-    public List<Vector3> MovementAreas;
+    public List<Transform> MovementAreas;
+
+    Transform target;
+
+    bool active;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        Agent = GetComponent<NavMeshAgent>();   
+
+        RWPP = Random.Range(0, 2);
+        target = MovementAreas[RWPP];
+        currentlyWalking = true;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        CurrentPosition = gameObject.transform.position;
-        
-        if(!currentlyWalking)
+    {  
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        if(distance < 1f)
         {
-            RWPP = Random.Range(1, 2);
+            Debug.Log("1");
+            if (!active)
+            {
+            Debug.Log("2");
+                StartCoroutine(Randomize());
+            }
         }
-        if(RWPP == 1)
+
+
+        if (currentlyWalking)
         {
-            gameObject.transform.position = Vector3.MoveTowards(CurrentPosition, MovementAreas[1], movementSpeed);
-            currentlyWalking = true;
-        }   
-                      
+            Agent.destination = target.position;
+        }        
+    }
+
+    IEnumerator Randomize()
+    {
+        active = true;
+        RWPP = Random.Range(0, MovementAreas.Count);
+        target = MovementAreas[RWPP];
+        yield return new WaitForSeconds(1.5f);
+
+        active = false;
     }
 }

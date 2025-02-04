@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class FieldOfView : MonoBehaviour
 {
+    PathFinder PF;
+    
     public float radius;
     [Range(0,360)]
     public float angle;
@@ -24,10 +26,11 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
+        PF = GetComponent<PathFinder>();
         playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
     }
-
+    
     private IEnumerator FOVRoutine()
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
@@ -68,6 +71,7 @@ public class FieldOfView : MonoBehaviour
     {
         if(canSeePlayer == true)
         {
+            PF.enabled = false;
             MoveToPlayer();
         }
     }
