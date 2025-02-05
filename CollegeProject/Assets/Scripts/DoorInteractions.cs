@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorInteractions : MonoBehaviour
@@ -120,6 +118,7 @@ public class DoorInteractions : MonoBehaviour
             GameManager.InfoText.text = "You unlocked the door (you still have the key, drop it with F Key)";
             GameManager.unlockedGoldenDoor = true;
             GameManager.GoldenDoor.transform.position = GameManager.GoldenDoor.transform.position + DoorMover; 
+            gameObject.GetComponent<DoorInteractions>().enabled = false;
         }
 
         if(Input.GetKey(KeyCode.E) && GameManager.nearWhiteDoor && GameManager.hasWhiteKey && !GameManager.unlockedWhiteDoor)

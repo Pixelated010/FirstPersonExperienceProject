@@ -26,6 +26,8 @@ TagManager:
   - FirstFloor
   - SecondFloor
   - Ladder
+  - FinalDoor
+  - FinalLock
   layers:
   - Default
   - TransparentFX

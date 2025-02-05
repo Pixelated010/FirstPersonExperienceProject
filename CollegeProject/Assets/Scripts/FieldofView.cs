@@ -69,10 +69,14 @@ public class FieldOfView : MonoBehaviour
 
     private void Update() 
     {
-        if(canSeePlayer == true)
+        if(canSeePlayer)
         {
             PF.enabled = false;
             MoveToPlayer();
+        }
+        else if(!canSeePlayer)
+        {
+            PF.enabled = true;    
         }
     }
 
