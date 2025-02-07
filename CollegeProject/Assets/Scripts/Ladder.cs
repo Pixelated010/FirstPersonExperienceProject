@@ -56,16 +56,21 @@ public class Ladder : MonoBehaviour
 
     private void nearLadderText(Collider other)
     {
-        if (other.gameObject.CompareTag("Ladder") && !AscendedLadder)
+        if (other.gameObject.CompareTag("Ladder") && !AscendedLadder && !GameManager.hasAKey)
         {
             GameManager.InfoText.text = "Press E to ascend to the second floor!";
             nearLadderFirstFloor = true;
         }
 
-        if (other.gameObject.CompareTag("Ladder") && AscendedLadder)
+        if (other.gameObject.CompareTag("Ladder") && AscendedLadder && !GameManager.hasAKey)
         {
             GameManager.InfoText.text = "Press E to descend to the second floor!";
             nearLadderSecondFloor = true;
+        }
+
+        if (other.gameObject.CompareTag("Ladder") && GameManager.hasAKey)
+        {
+            GameManager.InfoText.text = "You need to drop the key in order to climb the ladder!";
         }
     }
 

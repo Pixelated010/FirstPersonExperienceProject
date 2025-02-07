@@ -18,6 +18,7 @@ public class FinalDoor : MonoBehaviour
     [Header("Door Assets")]
     public GameObject Door;
     public GameObject Lock;
+    public GameObject FinalDoorObject;
 
     [Header("Materials")]
     [SerializeField] Material GoldenMaterial;
@@ -276,7 +277,7 @@ public class FinalDoor : MonoBehaviour
         if(completionValue == 6)
         {
             GameManager.InfoText.text = "The door opened, Escape!";
-            gameObject.transform.position = gameObject.transform.position + DoorInteractions.DoorMover;
+            FinalDoorObject.transform.position = FinalDoorObject.transform.position + DoorInteractions.DoorMover;
         }
     }
 

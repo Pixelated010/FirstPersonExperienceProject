@@ -1605,7 +1605,6 @@ MonoBehaviour:
   BlueKeyIcon: {fileID: 275442507}
   RedKeyIcon: {fileID: 1256220296}
   GreenKeyIcon: {fileID: 944741603}
-  Lever: {fileID: 1240250715}
 --- !u!1 &754279607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7411463418591435719, guid: 7efed90c711c61b4bb8a4a04fef71003,
@@ -3540,6 +3539,8 @@ MonoBehaviour:
   Player: {fileID: 0}
   FirstFloor: {fileID: 188979359}
   SecondFloor: {fileID: 963875027}
+  floorOneDetection: {fileID: 0}
+  floorTwoDetection: {fileID: 0}
   nearLadderFirstFloor: 0
   nearLadderSecondFloor: 0
   AscendedLadder: 0

@@ -64,4 +64,11 @@ public class LeverInteraction : MonoBehaviour
         Key.SetActive(false);
         isLeverActive = false;
     }
+
+    IEnumerator DisplayDisappearText()
+    {
+        GameManager.InfoText.text = "The lever deactivated";
+        yield return new WaitForSeconds(10);  
+        GameManager.InfoText.text = "";      
+    }
 }
